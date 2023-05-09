@@ -76,12 +76,16 @@ def wish():
     # speak("Welcome back sir!")
     hour = int(datetime.datetime.now().hour)
     if hour >= 4 and hour < 12:
+        print("Good morning sir!")
         speak("Good morning sir!")
     elif hour >= 12 and hour < 18:
+        print("Good afternoon sir!")
         speak("Good afternoon sir!")
     elif hour >= 18 and hour < 20:
+        print("Good evening sir!")
         speak("Good evening sir!")
     else:
+        print("How can i help you or should i say Good night sir!")
         speak("How can i help you or should i say Good night sir!")
 
 
@@ -92,13 +96,13 @@ def takeCommand():
         print("Listening...")
         r.pause_threshold = 1
         audio = r.listen(source)
-        r.energy_threshold = 4000
+        r.energy_threshold = 1000
         r.adjust_for_ambient_noise(source, duration=1)
 
     try:
         print("Recognizing...")
         query = r.recognize_google(audio, language="en-in")
-        print(f"User said: {query}\n")
+        print(f"Me : {query}\n")
 
     except Exception:  # pylint: disable=broad-except
         # print(e)
@@ -113,11 +117,12 @@ if __name__ == "__main__":
         uquery = takeCommand().lower()  # type: ignore
 
         if "wikipedia" in uquery:
+            print("Searching wikipedia...")
             speak("Searching wikipedia...")
-
             # replace wikipedia with empty string
             uquery = uquery.replace("wikipedia", "")
             results = wikipedia.summary(uquery, sentences=2)
+            print("According to wikipedia")
             speak("According to wikipedia")
             print(results)
             speak(results)
@@ -151,21 +156,26 @@ if __name__ == "__main__":
             os.startfile(loc)
 
         elif "open gmail" in uquery:
+            print("Opening gmail...")
             speak("Opening gmail...")
             webbrowser.open("gmail.com")
 
-        elif "email to karan" in uquery:
+        elif "email to karna" in uquery:
             try:
+                print("What should i say?")
                 speak("What should i say?")
                 content = takeCommand()
                 to = "201172@juitsolan.in"
                 sendEmail(to, content)
+                print("Email has been sent!")
                 speak("Email has been sent!")
             except Exception:  # pylint: disable=broad-except
                 print("Unable to send email")
+                speak("Unable to send email")
 
         elif "quit" in uquery:
             print("Do you need anything else sir? or should i go for a nap? ")
+            speak("Do you need anything else sir? or should i go for a nap? ")
             qstr = takeCommand().lower()  # type: ignore
             if "no" in qstr or "nope" in qstr or "nah" in qstr or "no thanks" in qstr:
                 print("Ok sir, i am going for a nap")
@@ -181,6 +191,7 @@ if __name__ == "__main__":
 
         elif "sign out" in uquery or "log out" in uquery or "log off" in uquery:
             print("Do you wish to log out your computer ? (yes / no): ")
+            speak("Do you wish to log out your computer ? (yes / no): ")
             logout = takeCommand().lower()  # type: ignore
             if logout == "no":
                 exit()
@@ -189,6 +200,7 @@ if __name__ == "__main__":
 
         elif "shutdown" in uquery:
             print("Do you wish to shut down your computer ? (yes / no): ")
+            speak("Do you wish to shut down your computer ? (yes / no): ")
             shutdown = takeCommand().lower()  # type: ignore
             if shutdown == "no":
                 exit()
@@ -197,6 +209,7 @@ if __name__ == "__main__":
 
         elif "restart" in uquery:
             print("Do you wish to restart your computer ? (yes / no): ")
+            speak("Do you wish to restart your computer ? (yes / no): ")
             res = takeCommand().lower()  # type: ignore
             if res == "no":
                 exit()
@@ -205,6 +218,7 @@ if __name__ == "__main__":
 
         elif "sleep" in uquery:
             print("Do you wish to put your computer to sleep ? (yes / no): ")
+            speak("Do you wish to put your computer to sleep ? (yes / no): ")
             sleep = takeCommand().lower()  # type: ignore
             if sleep == "no":
                 exit()
